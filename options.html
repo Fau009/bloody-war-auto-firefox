@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Bloody War Auto — Configurações</title>
+<link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="app-header">
+    <h1>⚔ Bloody War Auto</h1>
+    <div class="save-row">
+      <button id="saveBtn">Salvar</button>
+      <span id="savedMsg" class="saved-msg"></span>
+    </div>
+  </div>
+
+  <nav class="tab-bar">
+    <button type="button" class="tab-btn active" data-tab="home">🏠 Home</button>
+    <button type="button" class="tab-btn" data-tab="flow">🧭 Fluxo Real</button>
+    <button type="button" class="tab-btn" data-tab="battles">⚔ Lutas</button>
+    <button type="button" class="tab-btn" data-tab="dev">📈 Desenvolvimento</button>
+    <button type="button" class="tab-btn" data-tab="health">❤ Saúde</button>
+    <button type="button" class="tab-btn" data-tab="history">📜 Histórico</button>
+    <button type="button" class="tab-btn" data-tab="reports">📊 Relatórios</button>
+  </nav>
+
+  <main class="tab-panels">
+
+    <!-- ============ HOME ============ -->
+    <div class="tab-panel active" id="tab-home">
+      <section class="home-hero">
+        <img id="homeAvatar" class="home-avatar" alt="Avatar">
+        <div class="home-hero-info">
+          <div class="home-name" id="homeName">—</div>
+          <div class="home-level" id="homeLevel">Nível —</div>
+          <div class="home-updated" id="homeUpdatedAt">Sem dados ainda</div>
+        </div>
+        <button type="button" id="homeRefreshBtn" class="secondary-btn">↻ Atualizar</button>
+      </section>
+
+      <div class="home-stat-grid">
+        <div class="home-stat-card">
+          <span class="home-stat-label">Experiência</span>
+          <span class="home-stat-value" id="homeXP">—</span>
+          <div class="home-stat-bar-track"><div class="home-stat-bar-fill xp" id="homeXPBar" style="width:0%"></div></div>
+        </div>
+        <div class="home-stat-card">
+          <span class="home-stat-label">Vida</span>
+          <span class="home-stat-value" id="homeHP">—</span>
+          <div class="home-stat-bar-track"><div class="home-stat-bar-fill hp" id="homeHPBar" style="width:0%"></div></div>
+        </div>
+        <div class="home-stat-card">
+          <span class="home-stat-label">Gold</span>
+          <span class="home-stat-value" id="homeGold">—</span>
+        </div>
+        <div class="home-stat-card">
+          <span class="home-stat-label">Criaturas (PDB)</span>
+          <span class="home-stat-value" id="homePDB">—</span>
+        </div>
+        <div class="home-stat-card">
+          <span class="home-stat-label">Batalhas (PDL)</span>
+          <span class="home-stat-value" id="homePDL">—</span>
+        </div>
+      </div>
+      <p class="hint">
+        Esses dados vêm do último ciclo da extensão rodando na aba do jogo —
+        se estiver tudo desligado ou a aba fechada, ficam parados no último
+        valor conhecido.
+      </p>
+    </div>
+
+    <!-- ============ FLUXO REAL ============ -->
+    <div class="tab-panel" id="tab-flow">
+      <section>
+        <h2>🧭 Fluxo Real</h2>
+        <p class="hint">
+          Mostra só as etapas que estão realmente ativas na sua configuração
+          atual, na ordem em que o bot as executa a cada ciclo (~15s). Ligue
+          ou desligue automações nas outras abas e volte aqui pra ver o
+          fluxo atualizar.
+        </p>
+        <div id="flowChart" class="flow-chart"></div>
+      </section>
+    </div>
+
+    <!-- ============ LUTAS ============ -->
+    <div class="tab-panel" id="tab-battles">
+      <div class="two-col-grid">
+        <section>
+          <h2>🌿 Criaturas (PDB)</h2>
+          <label>
+            Região do mapa
+            <input type="text" id="pdbRegion" placeholder="Ex: Floresta do Amanhecer">
+          </label>
+          <label>
+            Nome exato da criatura
+            <input type="text" id="pdbCreature" placeholder="Ex: Rato Selvagem">
+          </label>
+          <p class="hint">O nome precisa bater exatamente com o que aparece no card da criatura.</p>
+        </section>
+
+        <section>
+          <h2>⚔ Batalhas (PDL) — Filtros</h2>
+          <p class="hint">
+            Os filtros são testados nesta ordem. Quando um não retorna alvos
+            (adversários já derrotados), o bot passa pro próximo da lista
+            automaticamente. Arraste pelo ⠿ pra reordenar.
+          </p>
+          <div id="pdlFilterList" class="filter-list"></div>
+          <button type="button" id="addFilterBtn" class="secondary-btn">+ Adicionar filtro</button>
+        </section>
+      </div>
+    </div>
+
+    <!-- ============ DESENVOLVIMENTO ============ -->
+    <div class="tab-panel" id="tab-dev">
+      <div class="two-col-grid">
+        <section>
+          <h2>💼 Trabalho</h2>
+          <div class="checkbox-with-help">
+            <label class="inline-checkbox">
+              <input type="checkbox" id="workEnabled">
+              <span>Trabalho ativo agora (liga na hora que marcar)</span>
+            </label>
+            <details class="help-box">
+              <summary>❓ Ajuda</summary>
+              <p class="hint">
+                Esse checkbox e a "Rotina automática" abaixo controlam o
+                <strong>mesmo interruptor</strong>. Marcar aqui liga o
+                trabalho <strong>na hora</strong>, sem esperar horário
+                nenhum — é o controle manual. Já a rotina liga esse mesmo
+                interruptor sozinha, só nos horários que você configurar,
+                e desliga ao terminar cada sessão.
+              </p>
+              <p class="hint">
+                Se quiser que o trabalho comece <strong>só</strong> nos
+                horários programados, deixe esse checkbox
+                <strong>desmarcado</strong> e ative apenas a rotina abaixo.
+                Marcar os dois ao mesmo tempo faz o trabalho começar
+                imediatamente, ignorando os horários.
+              </p>
+            </details>
+          </div>
+          <label>
+            Qual trabalho escolher?
+            <select id="workDuration">
+              <option value="1">1h — Mensageiro da Vila</option>
+              <option value="2">2h — Colher ervas mágicas na floresta</option>
+              <option value="3">3h — Cortar lenha para o acampamento</option>
+              <option value="4">4h — Descarregar mercadorias</option>
+              <option value="5">5h — Auxiliar o alquimista com poções</option>
+              <option value="6">6h — Arquivista da Grande Biblioteca</option>
+              <option value="7">7h — Mineração nas Cavernas</option>
+              <option value="8">8h — Esculpir uma estátua na cidade</option>
+              <option value="9">9h — Aprendiz de Carpinteiro</option>
+              <option value="10">10h — Forja com o Anão</option>
+              <option value="11">11h — Escolta de Caravana</option>
+              <option value="12">12h — Patrulha Noturna do Castelo</option>
+            </select>
+          </label>
+          <p class="hint">
+            ⚠️ Enquanto trabalha, o personagem não pode atacar (Batalhas e
+            Criaturas ficam pausadas). Com esse toggle ligado, o bot mantém
+            trabalho em loop sempre, sem checar se há slots de ataque livres.
+            Ao terminar, o trabalho se desliga sozinho automaticamente.
+          </p>
+
+          <hr class="divider-options">
+
+          <label class="inline-checkbox">
+            <input type="checkbox" id="workScheduleEnabled">
+            <span>Ativar rotina de trabalho automático</span>
+          </label>
+
+          <label>
+            Repetição
+            <select id="workScheduleRepeat">
+              <option value="daily">Todos os dias</option>
+              <option value="weekly">Semanal</option>
+            </select>
+          </label>
+
+          <div id="workScheduleWeekdaysRow" class="weekday-row">
+            <label class="weekday-chip"><input type="checkbox" class="workWeekdayCheckbox" value="0"><span>Dom</span></label>
+            <label class="weekday-chip"><input type="checkbox" class="workWeekdayCheckbox" value="1"><span>Seg</span></label>
+            <label class="weekday-chip"><input type="checkbox" class="workWeekdayCheckbox" value="2"><span>Ter</span></label>
+            <label class="weekday-chip"><input type="checkbox" class="workWeekdayCheckbox" value="3"><span>Qua</span></label>
+            <label class="weekday-chip"><input type="checkbox" class="workWeekdayCheckbox" value="4"><span>Qui</span></label>
+            <label class="weekday-chip"><input type="checkbox" class="workWeekdayCheckbox" value="5"><span>Sex</span></label>
+            <label class="weekday-chip"><input type="checkbox" class="workWeekdayCheckbox" value="6"><span>Sáb</span></label>
+          </div>
+
+          <label>
+            Quantas execuções por dia?
+            <input type="number" id="workScheduleCount" min="1" max="12" step="1">
+          </label>
+
+          <div id="workScheduleTimesList" class="times-list"></div>
+
+          <p class="hint">
+            Nos horários configurados, a extensão liga o Trabalho sozinha
+            (se ainda não estiver ligado). Ele roda até terminar e se
+            desliga sozinho — não precisa mexer em nada.
+          </p>
+        </section>
+
+        <section>
+          <h2>🏋 Treinamento</h2>
+          <label class="inline-checkbox">
+            <input type="checkbox" id="trainingEnabled">
+            <span>Permitir treino automático</span>
+          </label>
+          <label>
+            Valor a deixar no cofre (mínimo)
+            <input type="number" id="trainingMinGold" min="0" step="1">
+          </label>
+          <p class="hint">
+            Marque os atributos que o bot pode treinar e arraste pelo ⠿ pra
+            definir a ordem de prioridade — tenta o primeiro marcado, se
+            não tiver gold suficiente (respeitando o valor mínimo acima)
+            tenta o próximo.
+          </p>
+          <div id="trainingStatList" class="filter-list"></div>
+        </section>
+      </div>
+    </div>
+
+    <!-- ============ SAÚDE ============ -->
+    <div class="tab-panel" id="tab-health">
+      <section>
+        <h2>❤ Saúde e Segurança</h2>
+        <label class="inline-checkbox">
+          <input type="checkbox" id="safetyEnabled">
+          <span>Permitir compra de poção</span>
+        </label>
+        <label>
+          Valor a deixar no cofre (mínimo)
+          <input type="number" id="safetyMinGold" min="0" step="1">
+        </label>
+        <label>
+          Qual poção deve ser comprada?
+          <select id="safetyPotionTier">
+            <option value="300">300 G — +100 HP</option>
+            <option value="1000">1000 G — +300 HP</option>
+            <option value="2000">2000 G — +500 HP</option>
+            <option value="5000">5000 G — +1000 HP</option>
+            <option value="20000">20000 G — +3000 HP</option>
+          </select>
+        </label>
+        <label>
+          Quantas poções deseja manter em estoque
+          <input type="number" id="safetyKeepStock" min="0" step="1">
+        </label>
+        <label>
+          Curar quando a vida cair abaixo de (%)
+          <input type="number" id="safetyHpThreshold" min="1" max="99" step="1">
+        </label>
+        <p class="hint">
+          Quando a vida cair abaixo do limite, a extensão tenta usar uma
+          poção do inventário primeiro; se não tiver em estoque e a compra
+          estiver permitida (respeitando o valor mínimo no cofre), ela
+          compra a poção configurada.
+        </p>
+      </section>
+    </div>
+
+    <!-- ============ HISTÓRICO ============ -->
+    <div class="tab-panel" id="tab-history">
+      <section>
+        <h2>📜 Histórico</h2>
+        <p class="hint">
+          Guardado só localmente no navegador (cache da extensão) — não é
+          um banco de dados, então some se você limpar os dados do
+          navegador ou desinstalar a extensão. Sem limite fixo de registros;
+          cresce até o armazenamento local do navegador (~5 MB) ser atingido.
+        </p>
+        <div class="history-toolbar">
+          <span id="historyCount" class="hint">0 registros</span>
+          <button type="button" id="historyRefreshBtn" class="secondary-btn">↻ Atualizar</button>
+          <button type="button" id="historyClearBtn" class="secondary-btn danger-btn">Limpar histórico</button>
+        </div>
+        <div id="historyList" class="history-list"></div>
+      </section>
+    </div>
+
+    <!-- ============ RELATÓRIOS ============ -->
+    <div class="tab-panel" id="tab-reports">
+      <section>
+        <h2>📊 Relatórios e Análise</h2>
+        <p class="hint">Análise dos últimos 200 registros salvos localmente. Os dados somem se você limpar o histórico ou reinstalar a extensão.</p>
+        <div class="reports-toolbar">
+          <span id="reportsCount" class="hint">— registros</span>
+          <button type="button" id="reportsRefreshBtn" class="secondary-btn">↻ Atualizar</button>
+        </div>
+
+        <!-- KPI cards -->
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-label">Total de Ações</div>
+            <div class="kpi-value" id="kpiTotal">—</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Taxa de Vitória</div>
+            <div class="kpi-value green" id="kpiWinRate">—</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Batalhas / Criaturas</div>
+            <div class="kpi-value" id="kpiBattles">—</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Vitórias</div>
+            <div class="kpi-value green" id="kpiWins">—</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Derrotas</div>
+            <div class="kpi-value red" id="kpiLosses">—</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Gold Ganho</div>
+            <div class="kpi-value gold" id="kpiGoldGained">—</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Gold Gasto</div>
+            <div class="kpi-value red" id="kpiGoldSpent">—</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Gold Líquido</div>
+            <div class="kpi-value" id="kpiNetGold">—</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Poções Usadas</div>
+            <div class="kpi-value" id="kpiPotions">—</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Treinos</div>
+            <div class="kpi-value" id="kpiTrains">—</div>
+          </div>
+        </div>
+
+        <!-- Grade de gráficos -->
+        <div class="charts-grid">
+
+          <!-- Linha 1: 3 donuts lado a lado -->
+          <div class="chart-card">
+            <div class="chart-title">Vitórias vs Derrotas</div>
+            <canvas id="chartWinLoss" class="report-canvas" data-h="230"></canvas>
+          </div>
+          <div class="chart-card">
+            <div class="chart-title">Batalhas (PDL) vs Criaturas (PDB)</div>
+            <canvas id="chartPdlPdb" class="report-canvas" data-h="230"></canvas>
+          </div>
+          <div class="chart-card">
+            <div class="chart-title">Distribuição Geral por Tipo</div>
+            <canvas id="chartTypeDonut" class="report-canvas" data-h="230"></canvas>
+          </div>
+
+          <!-- Linha 2: barra por hora (full) -->
+          <div class="chart-card full">
+            <div class="chart-title">Ações por Hora do Dia</div>
+            <canvas id="chartByHour" class="report-canvas" data-h="200"></canvas>
+          </div>
+
+          <!-- Linha 3: evolução do gold (full) -->
+          <div class="chart-card full">
+            <div class="chart-title">Evolução do Gold ao Longo do Tempo</div>
+            <canvas id="chartGoldOverTime" class="report-canvas" data-h="200"></canvas>
+          </div>
+
+          <!-- Linha 4: gold por hora (full) -->
+          <div class="chart-card full">
+            <div class="chart-title">Gold Líquido por Hora do Dia (🟡 ganho · 🔴 gasto)</div>
+            <canvas id="chartGoldByHour" class="report-canvas" data-h="200"></canvas>
+          </div>
+
+          <!-- Linha 5: dia da semana + win rate -->
+          <div class="chart-card">
+            <div class="chart-title">Ações por Dia da Semana</div>
+            <canvas id="chartByDow" class="report-canvas" data-h="200"></canvas>
+          </div>
+          <div class="chart-card">
+            <div class="chart-title">Taxa de Vitória: PDL vs PDB (%)</div>
+            <canvas id="chartWinRate" class="report-canvas" data-h="200"></canvas>
+          </div>
+
+          <!-- Linha 6: gold médio por combate -->
+          <div class="chart-card">
+            <div class="chart-title">Gold Médio por Combate</div>
+            <canvas id="chartAvgGold" class="report-canvas" data-h="200"></canvas>
+          </div>
+
+        </div>
+      </section>
+
+      <section>
+        <h2>📅 Histórico de Sessões</h2>
+        <p class="hint">Cada sessão vai da ativação até a desativação do sistema. Registros anteriores à última atualização usam agrupamento automático por inatividade.</p>
+        <div id="sessionList" class="session-list"></div>
+      </section>
+    </div>
+
+  </main>
+
+  <script src="shared.js"></script>
+  <script src="reports.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>

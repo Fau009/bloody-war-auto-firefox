@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Bloody War Auto</title>
+<link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="head">
+    <div class="head-top">
+      <div class="brand">
+        <div class="brand-mark">⚔</div>
+        <div>
+          <div class="brand-text">BLOODY WAR — AUTO</div>
+          <div class="brand-sub">v0.1</div>
+        </div>
+      </div>
+      <div class="head-actions">
+        <a class="settings-btn" href="options.html" target="_blank" title="Abrir configurações">⚙</a>
+        <div id="masterSwitch" class="switch"><div class="knob"></div></div>
+      </div>
+    </div>
+    <div class="status-line" id="statusLine">Parado</div>
+
+    <div class="overview">
+      <div class="overview-name-row">
+        <span class="overview-name" id="ovName">—</span>
+        <span class="overview-level-gold">
+          <span class="overview-level" id="ovLevel">Nível —</span>
+          <span class="overview-gold" id="ovGold">🪙 —</span>
+        </span>
+      </div>
+      <div class="overview-grid">
+        <div class="overview-stat">
+          <span class="overview-stat-label">XP</span>
+          <span class="overview-stat-value" id="ovXP">—</span>
+        </div>
+        <div class="overview-stat">
+          <span class="overview-stat-label">Vida</span>
+          <span class="overview-stat-value" id="ovHP">—</span>
+        </div>
+      </div>
+      <div class="overview-grid">
+        <div class="overview-stat">
+          <span class="overview-stat-label">Criaturas (PDB)</span>
+          <span class="overview-stat-value" id="ovPDBSlots">—</span>
+        </div>
+        <div class="overview-stat">
+          <span class="overview-stat-label">Batalhas (PDL)</span>
+          <span class="overview-stat-value" id="ovPDLSlots">—</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="auto-disable-row">
+      <label class="row-toggle small">
+        <span>Desativar automaticamente?</span>
+        <input type="checkbox" id="autoDisableEnabled">
+      </label>
+      <div class="auto-disable-timer" id="autoDisableTimer">
+        <input type="number" id="autoDisableMinutes" min="1" step="1">
+        <span>minutos</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- PDB · Criaturas -->
+  <div class="section">
+    <div class="section-head">
+      <div class="mini-switch" id="pdbEnabledSwitch" title="Ativar/desativar automação"><div class="mini-knob"></div></div>
+      <div class="section-title" data-toggle="pdbBody">
+        <div class="sec-icon nat">🌿</div>
+        <div>
+          <div class="sec-name">CRIATURAS</div>
+          <div class="sec-tag">PDB · Mapa Mundo</div>
+        </div>
+      </div>
+      <div class="chev" data-toggle="pdbBody">▶</div>
+    </div>
+    <div class="section-body" id="pdbBody">
+      <div class="slot-row">
+        <span class="slot-label">SLOTS ATUAIS</span>
+        <span class="slot-count" id="pdbSlotCount">—</span>
+      </div>
+      <div class="bar-track"><div class="bar-fill nat" id="pdbBar" style="width:0%"></div></div>
+      <div class="next-recharge" id="pdbCountdown"></div>
+
+      <hr class="divider">
+
+      <div class="field-row">
+        <div class="field-label">Modo</div>
+      </div>
+      <div class="segmented" id="pdbMode">
+        <div class="seg-btn" data-value="continuous">Contínuo</div>
+        <div class="seg-btn" data-value="scheduled">Agendado</div>
+      </div>
+      <div class="schedule-box" id="pdbSchedule">
+        <input type="text" id="pdbStart" placeholder="00:00">
+        <span class="schedule-sep">até</span>
+        <input type="text" id="pdbEnd" placeholder="06:00">
+      </div>
+
+      <div class="saved-filter">
+        <div class="saved-filter-label">Alvo salvo</div>
+        <div class="chip-row">
+          <span class="chip nat" id="pdbRegionChip">—</span>
+          <span class="chip nat" id="pdbCreatureChip">—</span>
+        </div>
+        <a class="edit-link" href="options.html#battles" target="_blank">Editar alvo →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- PDL · Batalhas -->
+  <div class="section">
+    <div class="section-head">
+      <div class="mini-switch" id="pdlEnabledSwitch" title="Ativar/desativar automação"><div class="mini-knob"></div></div>
+      <div class="section-title" data-toggle="pdlBody">
+        <div class="sec-icon bat">⚔</div>
+        <div>
+          <div class="sec-name">BATALHAS</div>
+          <div class="sec-tag">PDL · Bots &amp; Jogadores</div>
+        </div>
+      </div>
+      <div class="chev" data-toggle="pdlBody">▶</div>
+    </div>
+    <div class="section-body" id="pdlBody">
+      <div class="slot-row">
+        <span class="slot-label">SLOTS ATUAIS</span>
+        <span class="slot-count" id="pdlSlotCount">—</span>
+      </div>
+      <div class="bar-track"><div class="bar-fill bat" id="pdlBar" style="width:0%"></div></div>
+      <div class="next-recharge" id="pdlCountdown"></div>
+
+      <hr class="divider">
+
+      <div class="field-row">
+        <div class="field-label">Modo</div>
+      </div>
+      <div class="segmented" id="pdlMode">
+        <div class="seg-btn" data-value="continuous">Contínuo</div>
+        <div class="seg-btn" data-value="scheduled">Agendado</div>
+      </div>
+      <div class="schedule-box" id="pdlSchedule">
+        <input type="text" id="pdlStart" placeholder="00:00">
+        <span class="schedule-sep">até</span>
+        <input type="text" id="pdlEnd" placeholder="06:00">
+      </div>
+
+      <div class="saved-filter">
+        <div class="saved-filter-label">Filtro ativo agora</div>
+        <div class="chip-row">
+          <span class="chip bat" id="pdlFieldChip">—</span>
+          <span class="chip bat" id="pdlValueChip">—</span>
+        </div>
+        <a class="edit-link" href="options.html#battles" target="_blank">Editar filtros →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Trabalho -->
+  <div class="section">
+    <div class="section-head">
+      <div class="mini-switch" id="workEnabledSwitch" title="Ativar/desativar trabalho automático"><div class="mini-knob"></div></div>
+      <div class="section-title" data-toggle="workBody">
+        <div class="sec-icon work">💼</div>
+        <div>
+          <div class="sec-name">TRABALHO</div>
+          <div class="sec-tag">Ganha gold, mas bloqueia ataques</div>
+        </div>
+      </div>
+      <div class="chev" data-toggle="workBody">▶</div>
+    </div>
+    <div class="section-body" id="workBody">
+      <div class="saved-filter">
+        <div class="saved-filter-label">Config salva</div>
+        <div class="chip-row">
+          <span class="chip work" id="workDurationChip">—</span>
+        </div>
+        <a class="edit-link" href="options.html#dev" target="_blank">Editar trabalho →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Treinamento -->
+  <div class="section">
+    <div class="section-head">
+      <div class="mini-switch" id="trainingEnabledSwitch" title="Ativar/desativar treino automático"><div class="mini-knob"></div></div>
+      <div class="section-title" data-toggle="trainingBody">
+        <div class="sec-icon bat">🏋</div>
+        <div>
+          <div class="sec-name">TREINAMENTO</div>
+          <div class="sec-tag">Gasta gold subindo atributos</div>
+        </div>
+      </div>
+      <div class="chev" data-toggle="trainingBody">▶</div>
+    </div>
+    <div class="section-body" id="trainingBody">
+      <div class="saved-filter">
+        <div class="saved-filter-label">Config salva</div>
+        <div class="chip-row">
+          <span class="chip bat" id="trainingStatsChip">—</span>
+        </div>
+        <a class="edit-link" href="options.html#dev" target="_blank">Editar treino →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Saúde e Segurança -->
+  <div class="section">
+    <div class="section-head">
+      <div class="mini-switch" id="safetyEnabledSwitch" title="Ativar/desativar compra de poção"><div class="mini-knob"></div></div>
+      <div class="section-title" data-toggle="safetyBody">
+        <div class="sec-icon hp">♥</div>
+        <div>
+          <div class="sec-name">SAÚDE</div>
+          <div class="sec-tag">Cura automática (poção)</div>
+        </div>
+      </div>
+      <div class="chev" data-toggle="safetyBody">▶</div>
+    </div>
+    <div class="section-body" id="safetyBody">
+      <div class="slot-row">
+        <span class="slot-label">VIDA ATUAL</span>
+        <span class="slot-count" id="hpCount">—</span>
+      </div>
+      <div class="bar-track"><div class="bar-fill hp" id="hpBar" style="width:0%"></div></div>
+      <div class="next-recharge" id="hpHint">Ative abaixo pra monitorar.</div>
+
+      <hr class="divider">
+
+      <div class="saved-filter">
+        <div class="saved-filter-label">Config salva</div>
+        <div class="chip-row">
+          <span class="chip hp" id="safetyTierChip">—</span>
+          <span class="chip hp" id="safetyThresholdChip">—</span>
+        </div>
+        <a class="edit-link" href="options.html#health" target="_blank">Editar saúde →</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="log">
+    <div class="log-title">Registro recente</div>
+    <div id="logList"></div>
+  </div>
+
+  <script src="shared.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
