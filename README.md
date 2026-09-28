@@ -18,26 +18,45 @@ Automatizar as tarefas repetitivas do jogo para que o personagem continue evolui
 
 ---
 
+## Como baixar a extensão
+
+**Você não precisa saber programar para instalar. Siga os passos abaixo:**
+
+### Passo 1 — Baixar os arquivos
+
+1. Nesta página do GitHub, clique no botão verde **`<> Code`** (canto superior direito)
+2. No menu que abrir, clique em **`Download ZIP`**
+3. Um arquivo `.zip` será baixado para o seu computador
+4. **Extraia o ZIP**: clique com o botão direito no arquivo → **"Extrair tudo"** → escolha uma pasta e confirme
+
+> Guarde essa pasta em um lugar fixo (ex: `Documentos`). O Firefox precisa que ela continue existindo para a extensão funcionar.
+
+---
+
 ## Instalação no Firefox
 
-### Modo temporário (desenvolvimento)
+### Modo temporário (mais simples)
 
-1. Baixe ou clone este repositório
-2. Abra o Firefox e acesse `about:debugging#/runtime/this-firefox`
+Após baixar e extrair a pasta (passo acima):
+
+1. Abra o Mozilla Firefox
+2. Na barra de endereços, digite `about:debugging#/runtime/this-firefox` e pressione Enter
 3. Clique em **"Carregar extensão temporária…"**
-4. Selecione o arquivo `manifest.json` desta pasta
-5. O ícone ⚔ aparecerá na barra de extensões
+4. Navegue até a pasta extraída e selecione o arquivo **`manifest.json`**
+5. O ícone ⚔ vai aparecer na barra de extensões do Firefox
 
-> ⚠️ A instalação temporária é removida ao fechar o Firefox. Para uso contínuo, reinstale seguindo os passos acima após cada reinício.
+> ⚠️ **Atenção:** No modo temporário, a extensão é removida ao fechar o Firefox. Você precisará repetir o passo 3 e 4 após cada reinício do navegador.
 
-### Modo permanente
+### Modo permanente (sem precisar reinstalar toda vez)
 
-Para manter a extensão entre reinícios sem assinar pela Mozilla:
+Para manter a extensão entre reinícios:
 
-1. Acesse `about:config` no Firefox
-2. Pesquise `xpinstall.signatures.required`
-3. Defina como `false`
-4. Instale o arquivo `.xpi` (gerado compactando a pasta do projeto como `.zip` e renomeando para `.xpi`)
+1. Abra o Firefox e acesse `about:config` na barra de endereços
+2. Aceite o aviso de risco que aparecer
+3. Na caixa de busca, pesquise: `xpinstall.signatures.required`
+4. Clique no botão à direita para alterar o valor para **`false`**
+5. Agora vá até a pasta extraída, selecione **todos os arquivos** dentro dela, clique com o botão direito → **"Compactar para ZIP"**, e renomeie o arquivo gerado trocando `.zip` por `.xpi`
+6. No Firefox, acesse `about:addons`, clique no ícone de engrenagem ⚙ → **"Instalar extensão a partir de arquivo"** e selecione o `.xpi`
 
 ---
 
