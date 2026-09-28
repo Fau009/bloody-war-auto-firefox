@@ -1,0 +1,14 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "📤 Publicar atualização (Firefox)",
+      "type": "shell",
+      "command": "git add -A && git diff --cached --quiet && echo 'Nada para commitar.' || (git commit -m \"Atualização $(Get-Date -Format 'yyyy-MM-dd HH:mm')\" && git push && echo 'Publicado com sucesso!')",
+      "options": { "shell": { "executable": "powershell.exe", "args": ["-NoProfile", "-Command"] } },
+      "group": "build",
+      "presentation": { "reveal": "always", "panel": "shared", "clear": true },
+      "problemMatcher": []
+    }
+  ]
+}
